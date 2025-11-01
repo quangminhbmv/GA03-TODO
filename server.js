@@ -10,10 +10,11 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 // Sample data
+let nextId = 1;
 const todos = [
-  { id: 1, title: 'Đi chợ', completed: false },
-  { id: 2, title: 'Học bài', completed: true },
-  { id: 3, title: 'Làm deadline', completed: false },
+  { id: nextId++, title: 'Đi chợ', completed: false },
+  { id: nextId++, title: 'Học bài', completed: true },
+  { id: nextId++, title: 'Làm deadline', completed: false },
 ];
 
 // Route to render products with EJS
@@ -22,12 +23,13 @@ app.get('/api/todos', (req, res) => {
 });
 
 app.post('/api/todos', (req, res) => {
-  const todo = {
-    ...req.body,
-    id: todos.length + 1,
+  const newTodo = {
+    id: nextId++,              
+    title: req.body.title,
+    completed: false
   };
-  todos.push(todo);
-  res.json(todo);
+  todos.push(newTodo);
+  res.json(newTodo);
 });
 
 app.put('/api/todos/:id', (req, res) => {
